@@ -57,6 +57,7 @@
         android:layout_height="37dp"
         android:layout_marginStart="108dp"
         android:layout_marginTop="164dp"
+        android:onClick="getAntwortFromServer"
         android:text="Abschicken"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/antwortFromServer"></Button>
