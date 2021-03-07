@@ -8,20 +8,20 @@
 
     <TextView
         android:id="@+id/antwortFromServer"
-        android:layout_width="287dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="254dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="48dp"
         android:gravity="center|clip_vertical|center_horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="308dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="196dp"
+        android:layout_width="177dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="188dp"
         android:gravity="center|clip_vertical|center_horizontal"
         android:text="Antwort vom Server:"
         android:textSize="17dp"
@@ -30,9 +30,9 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="345dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="322dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:gravity="center|clip_vertical|center_horizontal"
         android:text="Gib deine Martikelnummer ein"
@@ -42,10 +42,10 @@
 
     <EditText
         android:id="@+id/martikelnummer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="237dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,9 +56,19 @@
         android:layout_width="149dp"
         android:layout_height="37dp"
         android:layout_marginStart="108dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="108dp"
         android:onClick="getAntwortFromServer"
         android:text="Abschicken"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/antwortFromServer"></Button>
+
+    <Button
+        android:id="@+id/berechnen"
+        android:layout_width="149dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="24dp"
+        android:text="Berechnen"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/abschciken" />
 </androidx.constraintlayout.widget.ConstraintLayout>
