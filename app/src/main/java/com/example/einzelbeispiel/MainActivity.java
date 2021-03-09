@@ -45,15 +45,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void getBerechnung (View view){
+    public void getBerechnung(View view) {
         if (isValidMartikelnummer()) {
             int matNr = Integer.parseInt(String.valueOf(martikelnummer.getText()));
-            int withModulo = matNr%7;
+            int withModulo = matNr % 7;
 
             resultFromDivision(withModulo);
-        }
-        else{
-            Toast.makeText(MainActivity.this,"Martikelnummer is not valid", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(MainActivity.this, "Martikelnummer is not valid", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -69,39 +68,49 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public boolean isValidMartikelnummer(){
-        if(martikelnummer.getText().toString() != null && martikelnummer.getText().toString() != ""){
+    public boolean isValidMartikelnummer() {
+        if (martikelnummer.getText().toString() != null && martikelnummer.getText().toString() != "") {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    public void resultFromDivision(int result){
-        switch (result){
+    public void resultFromDivision(int result) {
+        switch (result) {
             case 0:
                 antwortFromServer.setText(sortMartikelnummer(martikelnummer.getText().toString()));
+                break;
+
+            case 1:
+                //   antwortFromServer.setText(getGemeinsamTeiler(martikelnummer.getText().toString()));
+                break;
+
+            case 2:
+                antwortFromServer.setText(getASCIICharacters(String.valueOf(martikelnummer.getText())));
+                break;
+
+            case 3:
+                antwortFromServer.setText(getBinearQuersumme(String.valueOf(martikelnummer.getText())));
                 break;
         }
     }
 
     //CASE 0
-    public String sortMartikelnummer(String martikelnummer){
-        ArrayList<Integer> unsortiredMartikelNr= new ArrayList<>();
+    public String sortMartikelnummer(String martikelnummer) {
+        ArrayList<Integer> unsortiredMartikelNr = new ArrayList<>();
         ArrayList<Integer> geradeZahlen = new ArrayList<>();
         ArrayList<Integer> ungeradeZahlen = new ArrayList<>();
         String sortedMartikelNr = "";
 
-        for(int i = 0; i < martikelnummer.length(); i++){
+        for (int i = 0; i < martikelnummer.length(); i++) {
             unsortiredMartikelNr.add(Integer.parseInt(Character.toString(martikelnummer.charAt(i))));
         }
 
-        for (Integer zahl : unsortiredMartikelNr){
-            if(zahl % 2 == 0){
-              geradeZahlen.add(zahl);
-            }
-            else{
+        for (Integer zahl : unsortiredMartikelNr) {
+            if (zahl % 2 == 0) {
+                geradeZahlen.add(zahl);
+            } else {
                 ungeradeZahlen.add(zahl);
             }
         }
@@ -109,33 +118,132 @@ public class MainActivity extends AppCompatActivity {
         Collections.sort(geradeZahlen);
         Collections.sort(ungeradeZahlen);
 
-        sortedMartikelNr = getConcatList(geradeZahlen,ungeradeZahlen);
+        sortedMartikelNr = getConcatList(geradeZahlen, ungeradeZahlen);
 
         return sortedMartikelNr.toString();
     }
 
-    public String getConcatList(ArrayList<Integer> geradezahlen, ArrayList<Integer> ungeradezahlen){
+    public String getConcatList(ArrayList<Integer> geradezahlen, ArrayList<Integer> ungeradezahlen) {
         ArrayList<Integer> finalList = new ArrayList<>();
         String sortedMartikelNr = "";
 
-        for(int geradezahl : geradezahlen){
+        for (int geradezahl : geradezahlen) {
             finalList.add(geradezahl);
         }
 
-        for (int ungereadezahl : ungeradezahlen){
+        for (int ungereadezahl : ungeradezahlen) {
             finalList.add(ungereadezahl);
         }
 
-        for(int sortedelement : finalList){
-            sortedMartikelNr+= Integer.toString(sortedelement);
+        for (int sortedelement : finalList) {
+            sortedMartikelNr += Integer.toString(sortedelement);
         }
 
         return sortedMartikelNr;
     }
 
     //CASE 1
+    public ArrayList<Integer> getGemeinsamTeiler(String martikelnummer) {
+
+        ArrayList<Integer> indexes = new ArrayList<>();
+
+        a:
+        for (int i = 1; i < martikelnummer.length(); i++) {
+            int ziffer1 = Integer.parseInt(Character.toString(martikelnummer.charAt(i - 1)));
+            int ziffer2 = Integer.parseInt(Character.toString(martikelnummer.charAt(i)));
+
+            int teiler = 2;
+
+            while (teiler <= 9) {
+
+                if (ziffer1 % teiler == 0 && ziffer2 % teiler == 0) {
+
+                    indexes.add(i - 1);
+                    indexes.add(i);
+
+                    break a;
+                }
+
+                teiler++;
+
+            }
+        }
+
+        return indexes;
+    }
+
+    public boolean isEmptyList(ArrayList<Integer> indexes) {
+        if (indexes.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public ArrayList<Integer> test(String martikelnr) {
+
+        ArrayList<Integer> indexes = new ArrayList<>();
+
+        for (int i = 1; i < 2; i++) {
+            int ziffer1 = Integer.parseInt(Character.toString(martikelnr.charAt(i - 1)));
+            int ziffer2 = Integer.parseInt(Character.toString(martikelnr.charAt(i)));
+
+            indexes.add(i);
+            indexes.add(i - 1);
+        }
 
 
+        return indexes;
+    }
+
+    //CASE 2
+    public String getASCIICharacters(String martikelnummer) {
+
+        char[] asciiChars = new char[getCharLength(martikelnummer)];
+        asciiChars[0] = (char)((Integer.parseInt(Character.toString(martikelnummer.charAt(0)))) + 96);
+
+        int j = 0;
+        for (int i = 2; i < martikelnummer.length(); i = i + 2) {
+
+            if (i - 1 == 1) {
+
+                asciiChars[i - 1] =  (char)((Integer.parseInt(Character.toString(martikelnummer.charAt(i)))) + 96);
+            } else {
+
+                asciiChars[(i-2)-j] =  (char)((Integer.parseInt(Character.toString(martikelnummer.charAt(i)))) + 96);
+                j++;
+            }
+
+        }
+
+
+        String asciiString = new String(asciiChars);
+
+        return asciiString;
+    }
+
+    public int getCharLength(String martikelNr) {
+        if (martikelNr.length() % 2 == 0) {
+            return martikelNr.length() / 2;
+        } else {
+            return (martikelNr.length() / 2) + 1;
+        }
+    }
+
+    //CASE 3
+    public String getBinearQuersumme(String martikelNr){
+        int result = 0;
+
+        for (int i = 0; i < martikelNr.length(); i++){
+
+            result+= Integer.parseInt(Character.toString(martikelNr.charAt(i)));
+        }
+
+        String binearsumme = Integer.toBinaryString(result);
+
+        return binearsumme;
+
+    }
 
 
     public void setAntwortFromServer(String serverantwort) {
