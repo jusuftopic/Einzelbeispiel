@@ -19,6 +19,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
@@ -80,16 +81,62 @@ public class MainActivity extends AppCompatActivity {
     public void resultFromDivision(int result){
         switch (result){
             case 0:
-                sortedMartikelnummer(martikelnummer.getText().toString());
+                antwortFromServer.setText(sortMartikelnummer(martikelnummer.getText().toString()));
                 break;
         }
     }
 
-    public ArrayList<Integer> sortedMartikelnummer(String martikelnummer){
-        ArrayList<Integer> unsortiredMartikelNr= new ArrayList<>(Integer.parseInt(martikelnummer));
+    //CASE 0
+    public String sortMartikelnummer(String martikelnummer){
+        ArrayList<Integer> unsortiredMartikelNr= new ArrayList<>();
+        ArrayList<Integer> geradeZahlen = new ArrayList<>();
+        ArrayList<Integer> ungeradeZahlen = new ArrayList<>();
+        String sortedMartikelNr = "";
 
-        return unsortiredMartikelNr;
+        for(int i = 0; i < martikelnummer.length(); i++){
+            unsortiredMartikelNr.add(Integer.parseInt(Character.toString(martikelnummer.charAt(i))));
+        }
+
+        for (Integer zahl : unsortiredMartikelNr){
+            if(zahl % 2 == 0){
+              geradeZahlen.add(zahl);
+            }
+            else{
+                ungeradeZahlen.add(zahl);
+            }
+        }
+
+        Collections.sort(geradeZahlen);
+        Collections.sort(ungeradeZahlen);
+
+        sortedMartikelNr = getConcatList(geradeZahlen,ungeradeZahlen);
+
+        return sortedMartikelNr.toString();
     }
+
+    public String getConcatList(ArrayList<Integer> geradezahlen, ArrayList<Integer> ungeradezahlen){
+        ArrayList<Integer> finalList = new ArrayList<>();
+        String sortedMartikelNr = "";
+
+        for(int geradezahl : geradezahlen){
+            finalList.add(geradezahl);
+        }
+
+        for (int ungereadezahl : ungeradezahlen){
+            finalList.add(ungereadezahl);
+        }
+
+        for(int sortedelement : finalList){
+            sortedMartikelNr+= Integer.toString(sortedelement);
+        }
+
+        return sortedMartikelNr;
+    }
+
+    //CASE 1
+
+
+
 
     public void setAntwortFromServer(String serverantwort) {
         antwortFromServer.setText(serverantwort);
