@@ -93,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
             case 3:
                 antwortFromServer.setText(getBinearQuersumme(String.valueOf(martikelnummer.getText())));
                 break;
+
+            case 4:
+                antwortFromServer.setText(getSortedNumber(String.valueOf(martikelnummer.getText())));
+                break;
+
+            case 5:
+                antwortFromServer.setText(getPrimzahlMartikelnummer(String.valueOf(martikelnummer.getText())));
         }
     }
 
@@ -245,10 +252,65 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //CASE 4
+    public String getSortedNumber(String martikelNr){
 
-    public void setAntwortFromServer(String serverantwort) {
-        antwortFromServer.setText(serverantwort);
+        ArrayList<Integer> sortedNumber = getSortedList(martikelNr);
+        String sortedMartikelNr = "";
+
+        sortedNumber = getSortedListWithoutPrimeNumbers(sortedNumber);
+
+        sortedMartikelNr = getConvertedList(sortedNumber);
+
+        return sortedMartikelNr;
+
     }
+
+    public ArrayList<Integer> getSortedList(String martikelNr){
+        ArrayList<Integer> sortedNummer = new ArrayList<>();
+
+        for(int i = 0; i < martikelNr.length(); i++){
+            sortedNummer.add(Integer.parseInt(Character.toString(martikelNr.charAt(i))));
+        }
+
+        Collections.sort(sortedNummer);
+
+        return sortedNummer;
+    }
+
+    public ArrayList<Integer> getSortedListWithoutPrimeNumbers(ArrayList<Integer> sortedList){
+        ArrayList<Integer> sortedListWitoutPrimezahlen = new ArrayList<>();
+
+
+        for(int element : sortedList){
+            int numberOfTeilers = 0;
+            for (int i = 1; i < 10 ; i++){
+                if (element % i == 0 && element != 1){
+                    numberOfTeilers += 1;
+                }
+            }
+
+            if (numberOfTeilers > 2 || element == 1){
+                sortedListWitoutPrimezahlen.add(element);
+            }
+        }
+
+        return sortedListWitoutPrimezahlen;
+    }
+
+    public String getConvertedList(ArrayList<Integer> sortedNumber){
+        String sortedMartikelNr="";
+
+        for (int sortedelement : sortedNumber){
+            sortedMartikelNr += Integer.toString(sortedelement);
+        }
+
+
+        return sortedMartikelNr;
+    }
+
+
+
 
     class MessageReciver extends Thread {
 

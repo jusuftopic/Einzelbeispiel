@@ -113,5 +113,58 @@ public class GUITest {
         Assert.assertEquals(binearResult,mainActivity.getBinearQuersumme(martikelNr));
     }
 
+    //CASE 4
+    @Test
+    public void testSortedMartikelNrWihoutPrimazahlen(){
+
+        String martikelnummer = "11918546";
+        String sortedWithoutPrimezahlMartikelNr = "1114689";
+
+        Assert.assertEquals(sortedWithoutPrimezahlMartikelNr,mainActivity.getSortedNumber(martikelnummer));
+    }
+
+    @Test
+    public void testSortedArrayList()
+    {
+        String martikeNr= "11918546";
+
+        ArrayList<Integer> sortedArray = new ArrayList<>();
+
+        sortedArray.add(1);
+        sortedArray.add(1);
+        sortedArray.add(1);
+        sortedArray.add(4);
+        sortedArray.add(5);
+        sortedArray.add(6);
+        sortedArray.add(8);
+        sortedArray.add(9);
+
+        Assert.assertEquals(sortedArray,mainActivity.getSortedList(martikeNr));
+    }
+
+    @Test
+    public void SortedListWithoutPrimeNumbers(){
+        ArrayList<Integer> listWihtPrimzahlen = new ArrayList<>();
+        ArrayList<Integer> listWihtoutPrimzahlen = new ArrayList<>();
+
+        for(int i = 1; i < 10; i++){
+            listWihtPrimzahlen.add(i);
+        }
+
+        listWihtoutPrimzahlen.add(1);
+        listWihtoutPrimzahlen.add(4);
+        listWihtoutPrimzahlen.add(6);
+        listWihtoutPrimzahlen.add(8);
+        listWihtoutPrimzahlen.add(9);
+
+        Assert.assertEquals(listWihtoutPrimzahlen,mainActivity.getSortedListWithoutPrimeNumbers(listWihtPrimzahlen));
+
+    }
+
+    @Test
+    public void test(){
+        int a = 11918547%7;
+        Assert.assertEquals(4, a);
+    }
 
 }
