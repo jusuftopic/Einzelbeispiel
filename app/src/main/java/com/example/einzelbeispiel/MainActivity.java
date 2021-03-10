@@ -207,17 +207,17 @@ public class MainActivity extends AppCompatActivity {
     public String getASCIICharacters(String martikelnummer) {
 
         char[] asciiChars = new char[getCharLength(martikelnummer)];
-        asciiChars[0] = (char)((Integer.parseInt(Character.toString(martikelnummer.charAt(0)))) + 96);
+        asciiChars[0] = (char) ((Integer.parseInt(Character.toString(martikelnummer.charAt(0)))) + 96);
 
         int j = 0;
         for (int i = 2; i < martikelnummer.length(); i = i + 2) {
 
             if (i - 1 == 1) {
 
-                asciiChars[i - 1] =  (char)((Integer.parseInt(Character.toString(martikelnummer.charAt(i)))) + 96);
+                asciiChars[i - 1] = (char) ((Integer.parseInt(Character.toString(martikelnummer.charAt(i)))) + 96);
             } else {
 
-                asciiChars[(i-2)-j] =  (char)((Integer.parseInt(Character.toString(martikelnummer.charAt(i)))) + 96);
+                asciiChars[(i - 2) - j] = (char) ((Integer.parseInt(Character.toString(martikelnummer.charAt(i)))) + 96);
                 j++;
             }
 
@@ -238,12 +238,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //CASE 3
-    public String getBinearQuersumme(String martikelNr){
+    public String getBinearQuersumme(String martikelNr) {
         int result = 0;
 
-        for (int i = 0; i < martikelNr.length(); i++){
+        for (int i = 0; i < martikelNr.length(); i++) {
 
-            result+= Integer.parseInt(Character.toString(martikelNr.charAt(i)));
+            result += Integer.parseInt(Character.toString(martikelNr.charAt(i)));
         }
 
         String binearsumme = Integer.toBinaryString(result);
@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //CASE 4
-    public String getSortedNumber(String martikelNr){
+    public String getSortedNumber(String martikelNr) {
 
         ArrayList<Integer> sortedNumber = getSortedList(martikelNr);
         String sortedMartikelNr = "";
@@ -266,10 +266,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public ArrayList<Integer> getSortedList(String martikelNr){
+    public ArrayList<Integer> getSortedList(String martikelNr) {
         ArrayList<Integer> sortedNummer = new ArrayList<>();
 
-        for(int i = 0; i < martikelNr.length(); i++){
+        for (int i = 0; i < martikelNr.length(); i++) {
             sortedNummer.add(Integer.parseInt(Character.toString(martikelNr.charAt(i))));
         }
 
@@ -278,19 +278,19 @@ public class MainActivity extends AppCompatActivity {
         return sortedNummer;
     }
 
-    public ArrayList<Integer> getSortedListWithoutPrimeNumbers(ArrayList<Integer> sortedList){
+    public ArrayList<Integer> getSortedListWithoutPrimeNumbers(ArrayList<Integer> sortedList) {
         ArrayList<Integer> sortedListWitoutPrimezahlen = new ArrayList<>();
 
 
-        for(int element : sortedList){
+        for (int element : sortedList) {
             int numberOfTeilers = 0;
-            for (int i = 1; i < 10 ; i++){
-                if (element % i == 0 && element != 1){
+            for (int i = 1; i < 10; i++) {
+                if (element % i == 0 && element != 1) {
                     numberOfTeilers += 1;
                 }
             }
 
-            if (numberOfTeilers > 2 || element == 1){
+            if (numberOfTeilers > 2 || element == 1) {
                 sortedListWitoutPrimezahlen.add(element);
             }
         }
@@ -298,10 +298,10 @@ public class MainActivity extends AppCompatActivity {
         return sortedListWitoutPrimezahlen;
     }
 
-    public String getConvertedList(ArrayList<Integer> sortedNumber){
-        String sortedMartikelNr="";
+    public String getConvertedList(ArrayList<Integer> sortedNumber) {
+        String sortedMartikelNr = "";
 
-        for (int sortedelement : sortedNumber){
+        for (int sortedelement : sortedNumber) {
             sortedMartikelNr += Integer.toString(sortedelement);
         }
 
@@ -309,7 +309,59 @@ public class MainActivity extends AppCompatActivity {
         return sortedMartikelNr;
     }
 
+    //CASE 5
+    public String getPrimzahlMartikelnummer(String martikelnummer){
 
+        String martikelnummerOnlyPrimzahl = "";
+        ArrayList<Integer> integerMartikelNr = getMartikelNrZiffern(martikelnummer);
+
+        integerMartikelNr = getPrimzahlZiffern(integerMartikelNr);
+
+        martikelnummerOnlyPrimzahl = toPrimzahlString(integerMartikelNr);
+
+        return martikelnummerOnlyPrimzahl;
+    }
+
+    public ArrayList<Integer> getMartikelNrZiffern(String martikelnummer){
+        ArrayList<Integer> integerMartikelNr = new ArrayList<>();
+
+        for(int i = 0; i < martikelnummer.length(); i++){
+            integerMartikelNr.add(Integer.parseInt(Character.toString(martikelnummer.charAt(i))));
+        }
+
+        return integerMartikelNr;
+    }
+
+    public ArrayList<Integer> getPrimzahlZiffern(ArrayList<Integer> integerMartikelNr){
+
+        ArrayList<Integer> primzahlMartikelNr = new ArrayList<>();
+
+        for (int ziffer : integerMartikelNr){
+            int numOfTeilers = 0;
+
+            for(int i = 1; i < 10; i++){
+                if(ziffer != 1 && ziffer % i == 0){
+                    numOfTeilers += 1;
+                }
+            }
+
+            if(numOfTeilers == 2){
+                primzahlMartikelNr.add(ziffer);
+            }
+        }
+
+        return primzahlMartikelNr;
+    }
+
+    public String toPrimzahlString(ArrayList<Integer> primzahlZiffern){
+        String primzahlMartikelnummer = "";
+
+        for (int primziffer : primzahlZiffern){
+            primzahlMartikelnummer += Integer.toString(primziffer);
+        }
+
+        return primzahlMartikelnummer;
+    }
 
 
     class MessageReciver extends Thread {

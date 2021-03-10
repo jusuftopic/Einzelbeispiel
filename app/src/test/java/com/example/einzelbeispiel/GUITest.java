@@ -161,10 +161,44 @@ public class GUITest {
 
     }
 
+    //CASE 5
     @Test
-    public void test(){
-        int a = 11918547%7;
-        Assert.assertEquals(4, a);
+    public void testPrimzahlMartikelnummer(){
+       String martikelnummer = "11918546";
+       String primzahlMartikelnummer = "5";
+
+       Assert.assertEquals(primzahlMartikelnummer,mainActivity.getPrimzahlMartikelnummer(martikelnummer));
+    }
+
+    @Test
+    public void testMartikelnummerToIntegerList(){
+
+        String martikelNr = "123456789";
+        ArrayList<Integer> martikelNrZiffern = new ArrayList<>();
+        int i = 1;
+
+        while (i < 10){
+            martikelNrZiffern.add(i);
+            i++;
+        }
+
+        Assert.assertEquals(martikelNrZiffern,mainActivity.getMartikelNrZiffern(martikelNr));
+    }
+
+    @Test
+    public void testPrimZahlZiffern(){
+        ArrayList<Integer> integerMartikelNr = new ArrayList<>();
+        ArrayList<Integer> primzahlMartikelNr = new ArrayList<>();
+
+        integerMartikelNr.add(1);
+        integerMartikelNr.add(2);
+        integerMartikelNr.add(3);
+        integerMartikelNr.add(6);
+
+        primzahlMartikelNr.add(2);
+        primzahlMartikelNr.add(3);
+
+        Assert.assertEquals(primzahlMartikelNr,mainActivity.getPrimzahlZiffern(integerMartikelNr));
     }
 
 }
