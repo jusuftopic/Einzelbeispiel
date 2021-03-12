@@ -57,25 +57,13 @@ public class GUITest {
 
     @Test
     public void testGemeinsamTeiler(){
-        ArrayList<Integer> indexes = new ArrayList<>();
+       String martikelNr = "11918544";
+       String indexes = "Indexes: 4,6";
 
-        indexes.add(1);
-        indexes.add(2);
-
-        String martikelNr = "1223456";
-
-        Assert.assertEquals(indexes,mainActivity.getGemeinsamTeiler(martikelNr));
+       Assert.assertEquals(indexes, mainActivity.getGemeinsamTeiler(martikelNr));
     }
 
-    @Test
-    public void testIndexes(){
-        ArrayList<Integer> indexes = new ArrayList<>();
 
-        indexes.add(1);
-        indexes.add(0);
-
-        Assert.assertEquals(indexes,mainActivity.test("11918546"));
-    }
 
     //CASE 2 TESTS
     @Test
@@ -228,8 +216,30 @@ public class GUITest {
         int result = 6;
 
        Assert.assertEquals(result,mainActivity.getAlternierendQuersumme(martikelNr));
+    }
 
+    @Test
+    public void testAlternierendeSumme2Weg(){
+        ArrayList<Integer> martikelNr = new ArrayList<>();
+
+        martikelNr.add(1);
+        martikelNr.add(1);
+        martikelNr.add(9);
+        martikelNr.add(1);
+        martikelNr.add(8);
+        martikelNr.add(5);
+        martikelNr.add(4);
+        martikelNr.add(6);
+
+        int ungeradesumme = mainActivity.getUngeradeSumme(martikelNr);
+        int geradesumme = mainActivity.getGeradeSumme(martikelNr);
+
+        int result = geradesumme - ungeradesumme;
+
+        Assert.assertEquals(9, result);
 
     }
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.einzelbeispiel;
 
+import androidx.annotation.ArrayRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case 1:
-                //   antwortFromServer.setText(getGemeinsamTeiler(martikelnummer.getText().toString()));
+                berechnungresult.setText(getGemeinsamTeiler(martikelnummer.getText().toString()));
                 break;
 
             case 2:
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             default:
-                antwortFromServer.setText("Fehler beim Berrechnung.");
+                berechnungresult.setText("Fehler beim Berrechnung.");
         }
     }
 
@@ -162,58 +163,91 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //CASE 1
-    public ArrayList<Integer> getGemeinsamTeiler(String martikelnummer) {
+    public String getGemeinsamTeiler(String martikelnummer) {
+        ArrayList<Integer> indexesGerade = new ArrayList<>();
+        ArrayList<Integer> indexesUngerade = new ArrayList<>();
 
-        ArrayList<Integer> indexes = new ArrayList<>();
+        int teiler2 = 0;
+        int teiler3 = 0;
 
-        a:
-        for (int i = 1; i < martikelnummer.length(); i++) {
-            int ziffer1 = Integer.parseInt(Character.toString(martikelnummer.charAt(i - 1)));
-            int ziffer2 = Integer.parseInt(Character.toString(martikelnummer.charAt(i)));
+        String indexes = "";
 
-            int teiler = 2;
 
-            while (teiler <= 9) {
+       a: for (int i = 0; i < martikelnummer.length(); i++){
 
-                if (ziffer1 % teiler == 0 && ziffer2 % teiler == 0) {
+            if(indexesGerade.size()< 2 && indexesUngerade.size()< 2) {
 
-                    indexes.add(i - 1);
-                    indexes.add(i);
 
-                    break a;
+                if (Integer.parseInt(Character.toString(martikelnummer.charAt(i))) % 2 == 0) {
+                    teiler2 += 1;
+                    indexesGerade.add(i);
+                } else if (Integer.parseInt(Character.toString(martikelnummer.charAt(i))) % 3 == 0) {
+                    teiler3 += 1;
+                    indexesUngerade.add(i);
                 }
+            }
 
-                teiler++;
-
+          else{
+              break a;
             }
         }
 
-        return indexes;
-    }
-
-    public boolean isEmptyList(ArrayList<Integer> indexes) {
-        if (indexes.isEmpty()) {
-            return true;
-        } else {
-            return false;
+        if (getTeilerToInput(teiler2,teiler3).equals("teiler2")){
+            indexes = getIndexesAlsString(indexesGerade);
         }
-    }
-
-    public ArrayList<Integer> test(String martikelnr) {
-
-        ArrayList<Integer> indexes = new ArrayList<>();
-
-        for (int i = 1; i < 2; i++) {
-            int ziffer1 = Integer.parseInt(Character.toString(martikelnr.charAt(i - 1)));
-            int ziffer2 = Integer.parseInt(Character.toString(martikelnr.charAt(i)));
-
-            indexes.add(i);
-            indexes.add(i - 1);
+        else if((getTeilerToInput(teiler2,teiler3).equals("teiler3"))){
+            indexes = getIndexesAlsString(indexesUngerade);
+        }
+        else{
+            indexes = "Kaine Zahlen mit gemeinsam Teiler > 1";
         }
 
 
+
         return indexes;
+
     }
+
+    public String getIndexesAlsString(ArrayList<Integer> indexes){
+
+        String stringIndexes = "Indexes: ";
+
+        for(int index : indexes){
+            if (indexes.indexOf(index) != indexes.size()-1){
+            stringIndexes += Integer.toString(index)+",";}
+
+            else{
+                stringIndexes +=Integer.toString(index);
+            }
+
+        }
+
+        return stringIndexes;
+    }
+
+    public String getTeilerToInput(int teiler2, int teiler3) {
+
+        String teilerToInput = "";
+
+        if(teiler2 == 2 && teiler3 == 2){
+            teilerToInput = "teiler2";
+        }
+        else if(teiler2 == 2 && teiler3 < 2){
+            teilerToInput="teiler2";
+        }
+        else if(teiler2 < 2 && teiler3 == 2){
+            teilerToInput = "teiler3";
+        }
+        else{
+            teilerToInput = "nothing";
+        }
+
+        return teilerToInput;
+    }
+
+
+
+
 
     //CASE 2
     public String getASCIICharacters(String martikelnummer) {
@@ -381,7 +415,12 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Integer> martikelNrZiffern = getMartikelNrZiffern(martikelnummer);
 
         // 1. WEG
-        int result = getAlternierendQuersumme(martikelNrZiffern);
+       // int result = getAlternierendQuersumme(martikelNrZiffern);
+
+        //2. WEG
+        int ungeradeSumme = getUngeradeSumme(martikelNrZiffern);
+        int geradeSumme = getGeradeSumme(martikelNrZiffern);
+        int result = geradeSumme - ungeradeSumme;
 
         if(result % 2 == 0){
             summeInfos = "Summe ist gerade Zahl";
@@ -406,6 +445,32 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return result;
+    }
+
+    public int getUngeradeSumme (ArrayList<Integer> martikelNr){
+
+        int ungeraderesult = 0;
+
+        for(int i = 0; i < martikelNr.size(); i++){
+            if(i % 2 != 0){
+                 ungeraderesult += martikelNr.get(i);
+            }
+        }
+
+        return ungeraderesult;
+    }
+
+    public int getGeradeSumme(ArrayList<Integer> martikelNr){
+
+        int geraderesult = 0;
+
+        for(int i = 0; i < martikelNr.size(); i++){
+            if (i % 2 == 0){
+                geraderesult += martikelNr.get(i);
+            }
+        }
+
+        return geraderesult;
     }
 
 
