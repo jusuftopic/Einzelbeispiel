@@ -113,7 +113,7 @@ public class GUITest {
         Assert.assertEquals(binearResult,mainActivity.getBinearQuersumme(martikelNr));
     }
 
-    //CASE 4
+    //CASE 4 TESTS
     @Test
     public void testSortedMartikelNrWihoutPrimazahlen(){
 
@@ -161,7 +161,7 @@ public class GUITest {
 
     }
 
-    //CASE 5
+    //CASE 5 TESTS
     @Test
     public void testPrimzahlMartikelnummer(){
        String martikelnummer = "11918546";
@@ -199,6 +199,37 @@ public class GUITest {
         primzahlMartikelNr.add(3);
 
         Assert.assertEquals(primzahlMartikelNr,mainActivity.getPrimzahlZiffern(integerMartikelNr));
+    }
+
+    //CASE 6 TESTS
+    @Test
+    public void testAlternierndeQuerSummeInfo(){
+
+        String martikelNr = "11918549";
+        String info = "Summe ist gerade Zahl";
+
+        Assert.assertEquals(info,mainActivity.getAlternierndeQuerSummeInfo(martikelNr));
+
+    }
+
+    @Test
+    public void testAlternierendeQuersumme(){
+        ArrayList<Integer> martikelNr = new ArrayList<>();
+
+        martikelNr.add(1);
+        martikelNr.add(1);
+        martikelNr.add(9);
+        martikelNr.add(1);
+        martikelNr.add(8);
+        martikelNr.add(5);
+        martikelNr.add(4);
+        martikelNr.add(9);
+
+        int result = 6;
+
+       Assert.assertEquals(result,mainActivity.getAlternierendQuersumme(martikelNr));
+
+
     }
 
 }

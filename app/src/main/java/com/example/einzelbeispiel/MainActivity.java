@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView martikelnummer;
     private TextView antwortFromServer;
+    private TextView berechnungresult;
     private Button abschicken;
     private Button berechnen;
 
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
         martikelnummer = (TextView) findViewById(R.id.martikelnummer);
         antwortFromServer = (TextView) findViewById(R.id.antwortFromServer);
+        berechnungresult = (TextView) findViewById(R.id.berechnungresult);
+
         abschicken = (Button) findViewById(R.id.abschciken);
         berechnen = (Button) findViewById(R.id.berechnen);
 
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     public void resultFromDivision(int result) {
         switch (result) {
             case 0:
-                antwortFromServer.setText(sortMartikelnummer(martikelnummer.getText().toString()));
+                berechnungresult.setText(sortMartikelnummer(martikelnummer.getText().toString()));
                 break;
 
             case 1:
@@ -87,19 +90,28 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case 2:
-                antwortFromServer.setText(getASCIICharacters(String.valueOf(martikelnummer.getText())));
+                berechnungresult.setText(getASCIICharacters(String.valueOf(martikelnummer.getText())));
                 break;
 
             case 3:
-                antwortFromServer.setText(getBinearQuersumme(String.valueOf(martikelnummer.getText())));
+                berechnungresult.setText(getBinearQuersumme(String.valueOf(martikelnummer.getText())));
                 break;
 
             case 4:
-                antwortFromServer.setText(getSortedNumber(String.valueOf(martikelnummer.getText())));
+                berechnungresult.setText(getSortedNumber(String.valueOf(martikelnummer.getText())));
                 break;
 
             case 5:
-                antwortFromServer.setText(getPrimzahlMartikelnummer(String.valueOf(martikelnummer.getText())));
+                berechnungresult.setText(getPrimzahlMartikelnummer(String.valueOf(martikelnummer.getText())));
+                break;
+
+
+            case 6:
+                berechnungresult.setText(getAlternierndeQuerSummeInfo(String.valueOf(martikelnummer.getText())));
+                break;
+
+            default:
+                antwortFromServer.setText("Fehler beim Berrechnung.");
         }
     }
 
@@ -361,6 +373,39 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return primzahlMartikelnummer;
+    }
+
+    //CASE 6
+    public String getAlternierndeQuerSummeInfo(String martikelnummer){
+        String summeInfos = "";
+        ArrayList<Integer> martikelNrZiffern = getMartikelNrZiffern(martikelnummer);
+
+        // 1. WEG
+        int result = getAlternierendQuersumme(martikelNrZiffern);
+
+        if(result % 2 == 0){
+            summeInfos = "Summe ist gerade Zahl";
+        }
+        else{
+            summeInfos = "Summe ist ungerade Zahl";
+        }
+
+        return summeInfos;
+    }
+
+    public int getAlternierendQuersumme(ArrayList<Integer> martikelNr){
+        int result = martikelNr.get(0);
+
+        for(int i = 1; i < martikelNr.size(); i++){
+            if(i%2 != 0){
+                result = result -  martikelNr.get(i);
+            }
+            else{
+                result = result+  martikelNr.get(i);
+            }
+        }
+
+        return result;
     }
 
 

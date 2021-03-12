@@ -10,8 +10,8 @@
         android:id="@+id/antwortFromServer"
         android:layout_width="254dp"
         android:layout_height="65dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="20dp"
         android:gravity="center|clip_vertical|center_horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -56,7 +56,7 @@
         android:layout_width="149dp"
         android:layout_height="37dp"
         android:layout_marginStart="108dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="132dp"
         android:onClick="getAntwortFromServer"
         android:text="Abschicken"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,9 +67,31 @@
         android:layout_width="149dp"
         android:layout_height="37dp"
         android:layout_marginStart="108dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:onClick="getBerechnung"
         android:text="Berechnen"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/abschciken" />
+
+    <TextView
+        android:id="@+id/textField3"
+        android:layout_width="214dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="22dp"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="Berechnung:"
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/antwortFromServer" />
+
+    <TextView
+        android:id="@+id/berechnungresult"
+        android:layout_width="200dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="19dp"
+        android:gravity="center|center_horizontal|center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textField3" />
 </androidx.constraintlayout.widget.ConstraintLayout>
